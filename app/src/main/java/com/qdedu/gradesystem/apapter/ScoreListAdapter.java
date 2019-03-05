@@ -38,8 +38,8 @@ public class ScoreListAdapter extends BaseAdapter<ScoreEntity, BaseViewHolder> {
         ButterKnife.bind(this, myViewHolder.itemView);
 
         tvType.setText(scoreEntity.getScoreTypeName());
-        tvUserName.setText(scoreEntity.getUserName());
-        tvUserId.setText(scoreEntity.getUserId());
+        tvUserName.setText("姓名：" + scoreEntity.getUserName());
+        tvUserId.setText("学号：" + scoreEntity.getUserId() + "");
         tvScore.setText(scoreEntity.getScore() + "分");
     }
 
