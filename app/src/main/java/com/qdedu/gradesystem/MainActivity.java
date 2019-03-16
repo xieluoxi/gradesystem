@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.qdedu.gradesystem.apapter.ScoreListAdapter;
 import com.qdedu.gradesystem.base.BaseActivity;
+import com.qdedu.gradesystem.business.MoreActivity;
 import com.qdedu.gradesystem.business.UploadScoreActivity;
 import com.qdedu.gradesystem.entity.ScoreEntity;
 
@@ -66,7 +69,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_add:
-                startActivity(new Intent(MainActivity.this, UploadScoreActivity.class));
+                startActivity(new Intent(MainActivity.this, MoreActivity.class));
                 break;
             case R.id.tv_search:
                 searchStudentScore();
@@ -78,12 +81,17 @@ public class MainActivity extends BaseActivity {
     private void searchStudentScore() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         final EditText editText = new EditText(MainActivity.this);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(editText);
         builder.setTitle("输入用户ID")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        isLimit = true;
+                        if (TextUtils.isEmpty(editText.getText().toString()))
+                            return;
                         userId = Integer.parseInt(editText.getText().toString());
+                        initData();
                     }
                 });
         builder.create().show();
